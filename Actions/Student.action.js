@@ -5,7 +5,7 @@ const {getStudents,getStudent,createStudent,updateStudent,deleteStudent} = requi
 
 router.get('/',getStudents)
 
-router.get('/:id',getStudent)
+router.get('/:MaSV',getStudent)
 
 router.post('/',createStudent)
 
