@@ -6,12 +6,7 @@ const StudentSchema = mongoose.Schema(
             required :[true,"Please enter MaSV"],
             unique: true,
             lowercase :true,
-            validate :{
-                validator :function(text){
-                    return text.length ==6 ===0;
-                },
-                message :'MaSb must have 6 length'
-            }
+            length : 6
         },
         Ho_Ten :{
             type :String,
@@ -31,7 +26,7 @@ const StudentSchema = mongoose.Schema(
         },
         DienThoai:{
             type :String,
-            required :[true,length ==10,"Please enter DienThoai"]
+            required :[true,"Please enter DienThoai"]
         },
         Email :{
             type :String,
@@ -53,6 +48,8 @@ const StudentSchema = mongoose.Schema(
         timestamps : true 
     }
 )
+StudentSchema.path("MaSV").validate(async function(value){
 
+})
 const Student = mongoose.model("Student",StudentSchema)
 module.exports = Student
