@@ -9,6 +9,12 @@ const userSchema = mongoose.Schema(
         password:{
             type:String,
             required:[true,"Vui lòng nhập mật khẩu"],
+        },
+        role:{
+            type:String,
+            required:true,
+            enum :['admin','teacher','student'],
+            default: 'student'
         }
     }
 )

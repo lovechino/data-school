@@ -14,7 +14,7 @@ const StudentSchema = mongoose.Schema(
             required :[true,"Please  enter Ho_ten"]
         },
         NgaySinh :{
-            type :Date,
+            type : Date,
             required :[true,"Please enter NgaySinh"]
         },
         GioiTinh :{
@@ -53,5 +53,6 @@ const StudentSchema = mongoose.Schema(
         timestamps : true 
     }
 )
+
 const Student = mongoose.model("Student",StudentSchema)
 module.exports = Student

@@ -8,11 +8,15 @@ const getStudents = async(req,res)=>{
          res.status(500).json({message: error.message})
      }
 }
+
 const getStudent = async(req,res)=>{
     try{
         const {MaSV} = req.params
         const student = await Student.find({MaSV : MaSV})
-        res.status(200).json(student)
+        student.map(item=>{
+            // console.log(item.NgaySinh.toLocaleDateString())
+            res.status(200).send(item)
+        })
     }catch(error){
         res.status(500).json({message: error.message})
     }
@@ -46,6 +50,7 @@ const updateStudent = async (req,res)=>{
         res.status(500).json({message: error.message})
     }
 }
+
 const deleteStudent = async(req,res)=>{
     try{
         const {id} = req.params
@@ -58,6 +63,7 @@ const deleteStudent = async(req,res)=>{
         res.status(500).json({message: error.message})
     }
 }
+
 module.exports = {
     getStudents,
     getStudent,

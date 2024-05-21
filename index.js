@@ -7,6 +7,7 @@ const teacherAction = require("./Actions/Teacher.action")
 const subjectAction = require("./Actions/Subject.action")
 const scheduleAction = require('./Actions/Schedule.action')
 const breakAction = require('./Actions/Break.action')
+const userAction = require('./Actions/User.action')
 const app = express()
 
 dotenv.config()
@@ -22,7 +23,7 @@ app.use("/api/teacher",teacherAction)
 app.use("/api/subject",subjectAction)
 app.use("/api/schedule",scheduleAction)
 app.use("/api/break",breakAction)
-
+app.use("/api/user",userAction)
 
 mongoose.connect(url)
 .then(
