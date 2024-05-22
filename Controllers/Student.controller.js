@@ -30,7 +30,7 @@ const createStudent = async(req,res)=>{
             const student = await Student.create(req.body)
             res.status(200).json(student)
         }else{
-            res.status(400).json({message:'Không tồn tại khoa'})
+            res.status(404).json({message:'Không tồn tại khoa'})
         }
     }catch(error){
         res.status(500).json({message: error.message})
@@ -40,12 +40,13 @@ const createStudent = async(req,res)=>{
 const updateStudent = async (req,res)=>{
     try{
         const {id} = req.params
-        const student = await Student.findByIdAndUpdate(id,req.body)
+        const student = await Student.findOneAndUpdate({MaSV : id},req.body)
         if(!student){
             return res.status(404).json({message: "Student not found" })
         }
-        const updateStudent = await Student.findById(id)
+        const updateStudent = await Student.findOne({MaSV :id})
         res.status(200).json(updateStudent)
+     
     }catch(error){
         res.status(500).json({message: error.message})
     }
@@ -54,7 +55,7 @@ const updateStudent = async (req,res)=>{
 const deleteStudent = async(req,res)=>{
     try{
         const {id} = req.params
-        const student = await Student.findByIdAndDelete(id)
+        const student = await Student.findOneAndDelete({MaSV : id})
         if(!student){
             return res.status(404).json({message: "Student not found" })
         }

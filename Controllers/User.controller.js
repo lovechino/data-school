@@ -5,6 +5,7 @@ const User = require("../Schemas/user.model")
 const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken')
 const {createToken} = require('./JWT')
+const{sendEmail} = require('./Email')
 dotenv.config()
 
 const createUser = async(req,res)=>{
@@ -68,11 +69,16 @@ const loginUser = async(req,res)=>{
   if(user){
     if(bcrypt.compare(req.body.password,user.password)){
         res.send({
-            username : user.username,
+            role : user.role,
             TOKEN :  createToken(user)
         })
     }
   }
+  await sendEmail({
+    email :'tempest2k2x@gmail.com',
+    subject :'m ngu vl',
+    message:'test message'
+  })
 }
 const hashPassword = async(password)=>{
     const salt = await bcrypt.genSalt(10)
@@ -82,5 +88,6 @@ const hashPassword = async(password)=>{
 
 module.exports = {
     createUser,
+    createT,
     loginUser
 }

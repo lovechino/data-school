@@ -1,5 +1,7 @@
 const Student = require("../Schemas/Student.model")
 const Break = require("../Schemas/Schedule.model")
+
+//create
 const createSchedule = async(req,res)=>{
     try{
         const student = await Student.find({MaSV : req.body.MaSV})
@@ -15,6 +17,7 @@ const createSchedule = async(req,res)=>{
     }
 }
 
+//update
 const updateBreak = async(req,res)=>{
     try{
         const subBreak = await Break.find({MaSV : req.body.MaSV})
@@ -31,6 +34,7 @@ const updateBreak = async(req,res)=>{
     }
 }
 
+//get list
 const getBreaks = async(req,res)=>{
     try{
         const abreak = await Break.find({})
@@ -40,6 +44,7 @@ const getBreaks = async(req,res)=>{
     }
 }
 
+//get one
 const getBreak = async(req,res)=>{
     try{
         const{id} = req.params
@@ -54,6 +59,8 @@ const getBreak = async(req,res)=>{
         res.status(500).json({message : error})
     }
 }
+
+
 module.exports = {
     createSchedule,
     updateBreak,
