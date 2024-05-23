@@ -30,12 +30,10 @@ const createUser = async(req,res)=>{
             const newUser = await User.create({username : hash.username,password : hassPass})
             valueCreate.push(newUser)
          }
-         res.status(200).json({valueCreate})
-        res.status(200).json({message : 'thanh cong'})
-       
+         return res.status(200).json({valueCreate})
     }
     catch(error){
-        res.status(500).json({message:error.message})
+        return res.status(500).json({message:error.message})
     }
 }
 
@@ -57,8 +55,7 @@ const createT = async(req,res)=>{
             const hassPass = await hashPassword(hash.password)
             const newUser = await User.create({username : hash.username,password : hassPass,role : 'teacher'})
         }
-        res.status(200).json({message:"create success"})
-        res.status(200).json("thanh cong")
+        return res.status(200).json({message:"create success"})
     }catch(error){
         res.status(200).send({message : error.message})
     }
@@ -68,7 +65,7 @@ const loginUser = async(req,res)=>{
   const user = await User.findOne({username : req.body.username})
   if(user){
     if(await bcrypt.compare(req.body.password,user.password)){
-        res.send({
+        return res.status(200).send({
             role : user.role,
             TOKEN :  createToken(user)
         })
