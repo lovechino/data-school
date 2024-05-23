@@ -1,5 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const cors = require('cors')
 const dotenv = require('dotenv')
 const studentAction = require("./Actions/Student.action")
 const khoaAction = require("./Actions/Khoa.action")
@@ -16,6 +17,7 @@ const url = process.env.DATABASE_URL;
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+app.use(cors())
 
 app.use("/api/students",studentAction)
 app.use("/api/khoa",khoaAction)
