@@ -83,6 +83,5 @@ const hashPassword = async(password)=>{
 
 module.exports = {
     createUser,
-    createT,
-    loginUser
+    createT
 }

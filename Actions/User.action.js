@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const{createUser,loginUser,createT} = require("../Controllers/User.controller")
+const{createUser,createT} = require("../Controllers/User.controller")
 const{authAd,authenToken} = require("../Controllers/JWT")
 
 //create hs
