@@ -74,11 +74,11 @@ const loginUser = async(req,res)=>{
         })
     }
   }
-  await sendEmail({
-    email :'tempest2k2x@gmail.com',
-    subject :'m ngu vl',
-    message:'test message'
-  })
+//   await sendEmail({
+//     email :'tempest2k2x@gmail.com',
+//     subject :'m ngu vl',
+//     message:'test message'
+//   })
 }
 const hashPassword = async(password)=>{
     const salt = await bcrypt.genSalt(10)

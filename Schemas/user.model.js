@@ -15,6 +15,15 @@ const userSchema = mongoose.Schema(
             required:true,
             enum :['admin','teacher','student'],
             default: 'student'
+        },
+        status_0:{
+            online :{
+                type : Boolean,
+                default : false
+            },
+            last_online:{
+                type : Date
+            }
         }
     }
 )
