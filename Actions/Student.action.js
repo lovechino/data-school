@@ -5,7 +5,7 @@ const {getStudents,getStudent,createStudent,updateStudent,deleteStudent} = requi
 const {authenToken,authAd,authAdT} = require('../Controllers/JWT')
 
 //get list 
-router.get('/',authenToken,getStudents)
+router.get('/',getStudents)
 
 //get one
 router.get('/:MaSV',authenToken,getStudent)
