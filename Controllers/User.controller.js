@@ -64,17 +64,17 @@ const createT = async(req,res)=>{
     }
 }
 
-const loginUser = async(req,res)=>{
-  const user = await User.findOne({username : req.body.username})
-  if(user){
-    if(bcrypt.compare(req.body.password,user.password)){
-        res.send({
-            role : user.role,
-            TOKEN :  createToken(user)
-        })
-    }
-  }
-}
+// const loginUser = async(req,res)=>{
+//   const user = await User.findOne({username : req.body.username})
+//   if(user){
+//     if(bcrypt.compare(req.body.password,user.password)){
+//         res.send({
+//             role : user.role,
+//             TOKEN :  createToken(user)
+//         })
+//     }
+//   }
+// }
 const hashPassword = async(password)=>{
     const salt = await bcrypt.genSalt(10)
     return await bcrypt.hash(password,salt)

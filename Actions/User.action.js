@@ -7,7 +7,7 @@ const{authAd,authenToken} = require("../Controllers/JWT")
 router.post('/',authAd,createUser)
 
 //login
-router.post('/login',loginUser)
+// router.post('/login',loginUser)
 
 //create gv
 router.post('/teacher',authAd,createT)
