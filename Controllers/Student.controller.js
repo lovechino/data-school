@@ -3,7 +3,7 @@ const Khoa = require('../Schemas/Khoa.model')
 const getStudents = async(req,res)=>{
     try{
         const student = await Student.find({})
-        res.status(200).json(student)
+        res.status(200).send(student)
      }catch(error){
          res.status(500).json({message: error.message})
      }
