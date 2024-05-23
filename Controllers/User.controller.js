@@ -57,7 +57,7 @@ const createT = async(req,res)=>{
         }
         return res.status(200).json({message:"create success"})
     }catch(error){
-        res.status(200).send({message : error.message})
+        return res.status(200).send({message : error.message})
     }
 }
 
@@ -71,7 +71,6 @@ const loginUser = async(req,res)=>{
         })
     }
   }
-     res.status(200).json({message : 'thanh cong'})
 }
 
 
