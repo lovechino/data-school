@@ -6,15 +6,15 @@ const{authenToken,authAd,authAdT} = require("../Controllers/JWT")
 
 
 //get list
-router.get('/',authenToken,getKhoas)
+router.get('/',getKhoas)
 
 //crate
-router.post('/',authAd,createKhoa)
+router.post('/',createKhoa)
 
 //get one
-router.get('/:id',authenToken,getKhoa)
+router.get('/:id',getKhoa)
 
 //update
-router.put('/:id',authenToken,updateKhoa)
+router.put('/:id',updateKhoa)
 
 module.exports = router

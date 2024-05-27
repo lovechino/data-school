@@ -14,6 +14,8 @@ const createToken = (user)=>{
     )
 }
 
+
+
 //all per
 const authenToken = (req,res,next)=>{
     const authHeader = req.headers['authorization']

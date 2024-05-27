@@ -18,39 +18,21 @@ const teachSchema = mongoose.Schema({
     },
     DienThoai:{
         type :String,
-        required :[true,"Please enter DienThoai"],
+        required :[true,"Vui lòng nhập số điện thoại"],
         match : /^(\+84|0)[0-9]{9}$/
     },
     Email :{
         type :String,
-        required :[true,"Please enter Email"],
+        required :[true,"Vui lòng nhập email"],
         match: /^\w+@[a-zA-Z_]+\.[a-zA-Z]{2,}$/
     },
     Khoa :{
         type :String,
-        required:[true,"Please enter Khoa"]
+        required:[true,"vui lòng nhập khoa"]
     },
-    BoMon :{
+    DiaChi:{
         type :String,
-        required:[true,"Please enter BoMon"]
-    },
-    DiaChi :{
-        ThanhPho :{
-            type :String,
-            required:[true,"Please enter ThanhPho"]
-        },
-        Quan :{
-            type :String,
-            required:[true,"Please enter Quan"]
-        },
-        Phuong :{
-            type :String,
-            required:[true,"Please enter Phuong"]
-        },
-        Duong :{
-            type :String,
-            required:[true,"Please enter Duong"]
-        }
+        required :[true,"Vui lòng nhập địa chỉ"]
     }
 })
 

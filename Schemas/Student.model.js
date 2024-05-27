@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Khoa = require('../Schemas/Khoa.model')
+
 const StudentSchema = mongoose.Schema(
     {
         MaSV :{
@@ -9,7 +9,7 @@ const StudentSchema = mongoose.Schema(
             minlength: 6,
             maxlength: 6
         },
-        Ho_Ten :{
+        HoTen :{
             type :String,
             required :[true,"Please  enter Ho_ten"]
         },
@@ -40,14 +40,17 @@ const StudentSchema = mongoose.Schema(
             type :String,
             required:[true,"Please enter Khoa"]
         },
-        Lop :{
-            type :String,
-            required :[true,"Please enter Lop"]
-        },
         TrangThai:{
             type :String,
             required :[true,"Please enter TrangThai"],
-            enum :['Đang học','Đã nghỉ']
+            enum :['Đang học','Đã nghỉ'],
+            default : 'Đang học'
+        },
+        NamHoc:{
+            type : Number,
+            required :[true,"Please enter NamHoc"],
+            enum : [1,2,3,4,5],
+            default : 1
         }
     },{
         timestamps : true 

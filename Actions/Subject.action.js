@@ -4,11 +4,11 @@ const{createSubject,getList,getOne} = require("../Controllers/Subject.controller
 const{authenToken,authAd,authAdT} = require("../Controllers/JWT")
 
 //create
-router.post('/',authAd,createSubject)
+router.post('/',createSubject)
 
 //get list
-router.get('/',authenToken,getList)
+router.get('/',getList)
 
 //get one
-router.get('/:id',authenToken,getOne)
+router.get('/:id',getOne)
 module.exports = router

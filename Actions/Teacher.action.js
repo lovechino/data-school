@@ -1,22 +1,22 @@
 const express = require("express")
 const router = express.Router()
 const teacher = require("../Schemas/Teacher.model")
-const {createKhoa,getList,getOne,updateT,deleteT} = require("../Controllers/Teacher.controller")
+const {create,getList,getOne,updateT,deleteT} = require("../Controllers/Teacher.controller")
 const{authenToken,authAd,authAdT} = require("../Controllers/JWT")
 
 //create
-router.post('/',authAd,createKhoa)
+router.post('/',create)
 
 //get list
-router.get('/',authenToken,getList)
+router.get('/',getList)
 
 //get one
-router.get('/:id',authenToken,getOne)
+router.get('/:id',getOne)
 
 //update
-router.put('/:id',authAd,updateT)
+router.put('/:id',updateT)
 
 //delete
-router.delete('/:id',authAd,deleteT)
+router.delete('/:id',deleteT)
 
 module.exports = router

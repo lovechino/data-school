@@ -2,12 +2,12 @@ const Khoa = require("../Schemas/Khoa.model")
 
 //get list
 const getKhoas = async(req,res)=>{
-    try{
-        const khoas = await Khoa.find({})
-        res.status(200).json({khoas})
-        }catch(err){
-            res.status(500).json({message : err.message})
-            }
+   try{
+    const khoas = await Khoa.find({})
+    return res.status(200).json(khoas)
+   }catch(err){
+    res.status(500).json({message:err.message})
+   }
 }
 
 
@@ -16,7 +16,7 @@ const getKhoa = async(req,res)=>{
     try{
         const {id} = req.params 
         const khoa = await Khoa.find({MaKhoa : id})
-        res.status(200).json({khoa})
+        res.status(200).json(khoa)
         }catch(err){
             res.status(500).json({message : err.message})
         }
@@ -26,7 +26,7 @@ const getKhoa = async(req,res)=>{
 const createKhoa = async(req,res)=>{
     try{
         const khoa = await Khoa.create(req.body)
-        res.status(200).json({khoa})
+        res.status(200).json(khoa)
         }catch(err){
             res.status(500).json({message : err.message})
             }
@@ -37,7 +37,8 @@ const updateKhoa = async(req,res)=>{
     try{
         const {id} = req.params
         const khoa = await Khoa.findOneAndUpdate({MaKhoa : id}, req.body)
-        res.status(200).json({khoa})
+        const newUpdate = await Khoa.findOne({MaKhoa :id})
+        res.status(200).json(newUpdate)
     }catch(error){
         res.status(500).json({message : error.message})
     }

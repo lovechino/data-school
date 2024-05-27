@@ -11,12 +11,13 @@ const khoaSchema = mongoose.Schema({
         type : String,
         required : true,
         unique : true
-    },
-    DienThoai :{
-        type : String,
-        required : true,
-        match: /^(\+84|0)[0-9]{9}$/
     }
+    // ,
+    // DienThoai :{
+    //     type : String,
+    //     required : true,
+    //     match: /^(\+84|0)[0-9]{9}$/
+    // }
 })
 
 const Khoa = mongoose.model("Khoa",khoaSchema)

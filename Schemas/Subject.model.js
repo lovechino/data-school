@@ -10,6 +10,10 @@ const subjectSchema = mongoose.Schema({
         type:String,
         required:true,
         unique : true
+    },
+    MaKhoa :{
+        type:String,
+        required:true
     }
 })
 

@@ -9,32 +9,33 @@ const{sendEmail} = require('./Email')
 dotenv.config()
 
 const createUser = async(req,res)=>{
-    try{
+    // try{
 
-         const student = await Student.find({})
-         const user  = await User.find({})
-         const resStudent = []
-         const listUser = []
-         const valueCreate = []
-         student.map(item=>{
-            resStudent.push({username : item.MaSV,password : item.NgaySinh.toLocaleDateString()})
-         })
-         user.map(item=>{
-            listUser.push({username : item.username,password : item.password})
-         })
-         //remove listUser to resStudent
-         const resa = resStudent.filter(item=>!listUser.some(item2=>item2.username === item.username))
-         for(const hash of resa){
-            const hassPass = await hashPassword(hash.password)
-            // const newUser = await User.create({username:hash.username,password:hassPass})
-            const newUser = await User.create({username : hash.username,password : hassPass})
-            valueCreate.push(newUser)
-         }
-         return res.status(200).json({valueCreate})
-    }
-    catch(error){
-        return res.status(500).json({message:error.message})
-    }
+    //      const student = await Student.find({})
+    //      const user  = await User.find({})
+    //      const resStudent = []
+    //      const listUser = []
+    //      const valueCreate = []
+    //      student.map(item=>{
+    //         resStudent.push({username : item.MaSV,password : item.NgaySinh.toLocaleDateString()})
+    //      })
+    //      user.map(item=>{
+    //         listUser.push({username : item.username,password : item.password})
+    //      })
+    //      //remove listUser to resStudent
+    //      const resa = resStudent.filter(item=>!listUser.some(item2=>item2.username === item.username))
+    //      for(const hash of resa){
+    //         const hassPass = await hashPassword(hash.password)
+    //         // const newUser = await User.create({username:hash.username,password:hassPass})
+    //         const newUser = await User.create({username : hash.username,password : hassPass})
+    //         valueCreate.push(newUser)
+    //      }
+    //      return res.status(200).json({valueCreate})
+    // }
+    // catch(error){
+    //     return res.status(500).json({message:error.message})
+    // }
+     
 }
 
 const createT = async(req,res)=>{
@@ -72,6 +73,18 @@ const loginUser = async(req,res)=>{
     }
   }
 }
+const hashPassword = async(password)=>{
+    const salt = await bcrypt.genSalt(10)
+    return await bcrypt.hash(password,salt)
+}
+
+
+const logOut = async(req,res)=>{
+    const token = req.headers.authorization.split(' ')[1]
+    //delete token
+    
+}
+
 
 
 module.exports = {

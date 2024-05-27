@@ -4,7 +4,7 @@ const{createUser,createT,loginUser} = require("../Controllers/User.controller")
 const{authAd,authenToken} = require("../Controllers/JWT")
 
 //create hs
-router.post('/',authAd,createUser)
+router.post('/',createUser)
 
 //login
 router.post('/login',loginUser)
@@ -12,5 +12,7 @@ router.post('/login',loginUser)
 //create gv
 router.post('/teacher',authAd,createT)
 
+
+router.post('/logout',authenToken)
 
 module.exports = router
