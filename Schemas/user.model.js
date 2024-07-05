@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema(
             },
             last_online:{
                 type : Date
+            },
+            deviceID:{
+                type : String,
+                default :'NoDevice'
             }
         }
     }

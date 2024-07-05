@@ -35,7 +35,6 @@ const createUser = async(req,res)=>{
     // catch(error){
     //     return res.status(500).json({message:error.message})
     // }
-     
 }
 
 const createT = async(req,res)=>{
@@ -66,10 +65,37 @@ const loginUser = async(req,res)=>{
   const user = await User.findOne({username : req.body.username})
   if(user){
     if(await bcrypt.compare(req.body.password,user.password)){
-        return res.status(200).send({
-            role : user.role,
-            TOKEN :  createToken(user)
-        })
+        // return res.status(200).send({
+        //     // role : user.role,
+        //     TOKEN :  createToken(user),
+        //     user : user
+        // })
+        if(user.role !== "student"){
+            const username = user.username
+            const newLogin = await User.findOneAndUpdate({username: username},{
+               $set :{
+                  status_0:{
+                    online : true,
+                    deviceID : user.status_0.deviceID
+                  }
+               }
+            })
+            res.status(200).send({
+                TOKEN :  createToken(user),
+                user : newLogin
+            })
+        }
+        else{
+            if(user.status_0.deviceID === "NoDevice"){
+                return res.status(200).send({
+                    message :'Lan dau login'
+                })
+            }else{
+                return res.status(200).send({
+                    message : "haha"
+                })
+            }
+        }
     }
   }
 }

@@ -11,7 +11,7 @@ router.get('/',getStudents)
 router.get('/:MaSV',authenToken,getStudent)
 
 //create
-router.post('/',authAd,createStudent)
+router.post('/',createStudent)
 
 //update
 router.put('/:id',authAd,updateStudent)
