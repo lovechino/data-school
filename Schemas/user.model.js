@@ -21,9 +21,6 @@ const userSchema = mongoose.Schema(
                 type : Boolean,
                 default : false
             },
-            last_online:{
-                type : Date
-            },
             deviceID:{
                 type : String,
                 default :'NoDevice'
@@ -32,5 +29,9 @@ const userSchema = mongoose.Schema(
     }
 )
 
+userSchema.pre('save',async function(next){
+    const user = this
+    next()
+})
 const user = mongoose.model("user",userSchema)
 module.exports = user

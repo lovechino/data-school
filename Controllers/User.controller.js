@@ -8,6 +8,8 @@ const {createToken} = require('./JWT')
 const{sendEmail} = require('./Email')
 dotenv.config()
 
+const datakey = process.env.ACCESS_TOKEN_SECRET 
+
 const createUser = async(req,res)=>{
     // try{
 
@@ -72,31 +74,64 @@ const loginUser = async(req,res)=>{
         // })
         if(user.role !== "student"){
             const username = user.username
-            const newLogin = await User.findOneAndUpdate({username: username},{
-               $set :{
+            const newLogin = await User.findOneAndUpdate({username: username},{        
                   status_0:{
                     online : true,
                     deviceID : user.status_0.deviceID
-                  }
-               }
+                  }   
             })
-            res.status(200).send({
+            const checklog = await User.findOne({username : username})
+            return res.status(200).send({
                 TOKEN :  createToken(user),
-                user : newLogin
+                user : checklog
             })
         }
         else{
             if(user.status_0.deviceID === "NoDevice"){
+                const usernane = user.username 
+                const newLogin = await User.findOneAndUpdate({username: username},
+                    {
+                        $set :{
+                            status_0:{
+                                online : true,
+                                deviceID : req.body.deviceID 
+                            }
+                        }
+                })
+                const checkLog = await User.findOne({username : usernane})
                 return res.status(200).send({
-                    message :'Lan dau login'
+                    TOKEN : createToken(user),
+                    data : checkLog
                 })
             }else{
-                return res.status(200).send({
-                    message : "haha"
-                })
+                const username = user.username 
+                const deviceID = user.status_0.deviceID 
+                if(deviceID == req.body.deviceID){
+                    const newLogin = await User.findOneAndUpdate({username: username},{
+                        $set :{
+                            status_0:{
+                                online : true,
+                                deviceID : deviceID
+                            }
+                        }
+                    })
+                    const checkLog = await User.findOne({username : username})
+                    return res.status(200).send({
+                        TOKEN : createToken(user),
+                        data : checkLog
+                    })
+                }else{
+                    return res.status(404).send({
+                        message : "Device ID not match"
+                    })
+                }
             }
         }
     }
+  }else{
+    return res.status(200).send({
+        message : "User not found"
+    })
   }
 }
 const hashPassword = async(password)=>{
@@ -107,14 +142,35 @@ const hashPassword = async(password)=>{
 
 const logOut = async(req,res)=>{
     const token = req.headers.authorization.split(' ')[1]
+    let username = ""
+    let deviceID = ""
     //delete token
-    
+    jwt.verify(token,datakey,(err,data)=>{
+    //    console.log(data.user)
+      const getUsername = data.user.username
+      const getDeviceID = data.user.status_0.deviceID
+      username += getUsername
+      deviceID += getDeviceID
+    })
+    const log = await User.findOneAndUpdate({username : username},{
+        $set :{
+            status_0 : {
+                online : false,
+                deviceID : deviceID
+            }
+        }
+    })
+    const checkLog = await User.findOne({username : username})
+    res.status(200).send(checkLog)
+//    const resa = await User.findOne({username : username})
+//     res.status(200).send(resa)
+// } 
 }
-
 
 
 module.exports = {
     createUser,
     createT,
-    loginUser
+    loginUser,
+    logOut
 }

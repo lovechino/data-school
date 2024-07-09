@@ -24,7 +24,7 @@ const authenToken = (req,res,next)=>{
     
     jwt.verify(token,datakey,(err,data)=>{
         if(err) res.status(403)
-        console.log(data)
+        // console.log(data)
         next()
     })
 }
@@ -39,7 +39,7 @@ const authAdT = (req,res,next)=>{
         if(data.user.role == process.env.roleA){
             res.status(403).json({message:"Không đủ quyền"})
         }else{
-            console.log(data)
+            // console.log(data)
             next()
         }
     })
@@ -56,10 +56,11 @@ const authAd = (req,res,next)=>{
         if(data.user.role != process.env.roleB){
             res.status(403).json({message:"Không đủ quyền"})
         }else{
-            console.log(data)
+            // console.log(data)
             next()
         }
     })
+    
 }
 
 
