@@ -4,7 +4,7 @@ const User = require("../Schemas/user.model")
 const dotenv = require('dotenv')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {createToken} = require('./JWT')
+const {createToken, createRefreshToken} = require('./JWT')
 const{sendEmail} = require('./Email')
 dotenv.config()
 
@@ -62,6 +62,7 @@ const createT = async(req,res)=>{
         return res.status(200).send({message : error.message})
     }
 }
+let refreshTKs = []
 
 const loginUser = async(req,res)=>{
   const user = await User.findOne({username : req.body.username})
@@ -72,6 +73,8 @@ const loginUser = async(req,res)=>{
         //     TOKEN :  createToken(user),
         //     user : user
         // })
+        const refreshTK = createRefreshToken(user)
+        refreshTKs.push(refreshTK)
         if(user.role !== "student"){
             const username = user.username
             const newLogin = await User.findOneAndUpdate({username: username},{        
@@ -82,7 +85,8 @@ const loginUser = async(req,res)=>{
             })
             const checklog = await User.findOne({username : username})
             return res.status(200).send({
-                TOKEN :  createToken(user),
+                accessToken :  createToken(user),
+                refreshToken : refreshTK,
                 user : checklog
             })
         }
@@ -94,13 +98,14 @@ const loginUser = async(req,res)=>{
                         $set :{
                             status_0:{
                                 online : true,
-                                deviceID : req.body.deviceID 
+                                // deviceID : req.body.deviceID 
                             }
                         }
                 })
                 const checkLog = await User.findOne({username : usernane})
                 return res.status(200).send({
-                    TOKEN : createToken(user),
+                    accessToken :  createToken(user),
+                    // refreshToken : refreshTK,
                     data : checkLog
                 })
             }else{
@@ -117,7 +122,8 @@ const loginUser = async(req,res)=>{
                     })
                     const checkLog = await User.findOne({username : username})
                     return res.status(200).send({
-                        TOKEN : createToken(user),
+                        accessToken :  createToken(user),
+                        // refreshToken : refreshTK,
                         data : checkLog
                     })
                 }else{
@@ -127,6 +133,10 @@ const loginUser = async(req,res)=>{
                 }
             }
         }
+    }else{
+        return res.status(404).send({
+            message : "Password is incorrect"
+        })
     }
   }else{
     return res.status(200).send({
@@ -139,6 +149,18 @@ const hashPassword = async(password)=>{
     return await bcrypt.hash(password,salt)
 }
 
+
+const refreshToken = async(req,res)=>{
+    const refreshToken = req.body.token
+    if(refreshToken == null){ return res.sendStatus(401) }
+    if(!refreshTKs.includes(refreshToken)) return res.sendStatus(403)
+    
+    jwt.verify(refreshToken,process.env.REFRESH_tOKEN_SECRET,(err,data)=>{
+        if(err) return res.sendStatus(403)
+        const accessToken = createToken(data)
+        res.json({accessToken : accessToken})
+    })
+}
 
 const logOut = async(req,res)=>{
     const token = req.headers.authorization.split(' ')[1]
@@ -160,6 +182,7 @@ const logOut = async(req,res)=>{
             }
         }
     })
+    refreshTKs = refreshTKs.filter(token => token !== req.body.token)
     const checkLog = await User.findOne({username : username})
     res.status(200).send(checkLog)
 //    const resa = await User.findOne({username : username})
@@ -172,5 +195,6 @@ module.exports = {
     createUser,
     createT,
     loginUser,
-    logOut
+    logOut,
+    refreshToken
 }

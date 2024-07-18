@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const datakey = process.env.ACCESS_TOKEN_SECRET 
+const refreshToken = process.env.REFRESH_tOKEN_SECRET
 
 const createToken = (user)=>{
     return jwt.sign({user},
@@ -14,6 +15,9 @@ const createToken = (user)=>{
     )
 }
 
+const createRefreshToken = (data)=>{
+    return jwt.sign({data}, refreshToken, {expiresIn: '7d'})
+}
 
 
 //all per
@@ -68,5 +72,6 @@ module.exports = {
     createToken,
     authenToken,
     authAdT,
-    authAd
+    authAd,
+    createRefreshToken
 }
